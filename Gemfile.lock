@@ -2,9 +2,16 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.5)
+    ansi (1.4.3)
+    builder (3.2.2)
+    byebug (2.1.1)
+      columnize (~> 0.3.6)
+      debugger-linecache (~> 1.2.0)
+    columnize (0.3.6)
     cookiejar (0.3.0)
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
+    debugger-linecache (1.2.0)
     em-http-request (1.1.1)
       addressable (>= 2.3.4)
       cookiejar
@@ -16,10 +23,22 @@ GEM
     eventmachine (1.0.3)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    hashie (2.0.5)
     http_parser.rb (0.6.0.beta.2)
     json (1.8.0)
+    metaclass (0.0.1)
     minitest (5.0.7)
+    minitest-reporters (1.0.0.beta2)
+      ansi
+      builder
+      minitest (>= 5.0)
+      powerbar
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
     multipart-post (1.2.0)
+    powerbar (1.0.11)
+      ansi (~> 1.4.0)
+      hashie (>= 1.1.0)
     rake (10.1.0)
     safe_yaml (0.9.5)
     webmock (1.13.0)
@@ -30,10 +49,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   em-http-request
   eventmachine
   faraday
   json
   minitest
+  minitest-reporters (= 1.0.0beta2)
+  mocha
   rake
   webmock

@@ -9,5 +9,8 @@ gem "faraday"
 
 group :test do
   gem "minitest"
+  gem "minitest-reporters", "1.0.0beta2"
   gem "webmock"
+  gem "mocha", require: false
+  gem "byebug"
 end
