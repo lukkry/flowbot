@@ -23,5 +23,10 @@ describe MemeMatcher do
       msg = '"y u no" "enjoy ur life?!"'
       refute MemeMatcher.match(msg)
     end
+
+    it "returns a blank string when a message is incorrectly formatted" do
+      msg = '"y u no" "enjoy ur life?!'
+      refute MemeMatcher.match(msg)
+    end
   end
 end

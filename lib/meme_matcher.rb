@@ -8,16 +8,12 @@ class MemeMatcher
 
   def self.match(str)
     REGEXS.each do |regex|
-      if resp = match_meme(regex, str)
-        return resp
+      matches = str.match(regex)
+      if matches
+        return MemeGenerator.url(matches[1], matches[2], matches[3])
       end
     end
-    return nil
-  end
 
-  def self.match_meme(regex, str)
-    str.match(regex) do |matches|
-      MemeGenerator.url(matches[1], matches[2], matches[3])
-    end
+    return nil
   end
 end
