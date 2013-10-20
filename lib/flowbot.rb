@@ -1,10 +1,10 @@
 require 'eventmachine'
 require 'em-http'
 require 'json'
-require 'flowdock'
-require 'meme_matcher'
+require 'flowbot/flowdock'
+require 'flowbot/meme_matcher'
 
-class Flowbot
+module Flowbot
   def self.respond_to(message)
     return unless message.is_a?(String)
 
