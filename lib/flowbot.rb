@@ -1,6 +1,7 @@
 require 'eventmachine'
 require 'em-http'
 require 'json'
+require 'flowdock'
 require 'meme_matcher'
 
 class Flowbot
@@ -20,23 +21,20 @@ class Flowbot
 
   def self.run(token, flow_token, organization, flow)
     http = EM::HttpRequest.new("https://stream.flowdock.com/flows/#{organization}/#{flow}")
-    push_url = "https://api.flowdock.com/v1/messages/chat/#{flow_token}"
     EventMachine.run do
-      s = http.get(:head => { 'Authorization' => [token, ''], 'accept' => 'application/json'}, :keepalive => true, :connect_timeout => 0, :inactivity_timeout => 0)
+      s = http.get(head: { 'Authorization' => [token, ''], 'accept' => 'text/event-stream'},
+                   keepalive: true, connect_timeout: 0, inactivity_timeout: 0)
 
       buffer = ""
       s.stream do |chunk|
         buffer << chunk
-        while line = buffer.slice!(/.+\r\n/)
-          message = JSON.parse(line)["content"]
-          response = respond_to(message)
-          if response
-            body = {
-              "content" => response,
-              "external_user_name" => "lukkry"
-            }
-          end
-          EventMachine::HttpRequest.new(push_url).post :body => body
+        while line = buffer.slice!(/.+\n\n/)
+          next unless line.include?("data")
+
+          payload = line.gsub(/^.*data\:/, "")
+          content = JSON.parse(payload)["content"]
+
+          Flowdock.send_message(respond_to(content), flow_token)
         end
       end
     end
