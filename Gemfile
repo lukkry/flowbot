@@ -7,6 +7,7 @@ gem "em-http-request"
 gem "json"
 gem "faraday"
 gem "foreman"
+gem "logging"
 
 group :test do
   gem "minitest"
